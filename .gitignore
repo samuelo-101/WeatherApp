@@ -1,22 +1,65 @@
-# Compiled class file
-*.class
-
-# Log file
 *.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+*.class
+.jenv
+.java-version
+#.gitignore
 
 # Package Files #
 *.jar
 *.war
 *.ear
-*.zip
-*.tar.gz
-*.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# log file
+*.log*
+
+#Eclipse project and built files
+*.project
+*.settings
+*.classpath
+*.eml
+*.userlibraries
+build/
+
+#built files
+target
+classes
+bin
+*/dependency-reduced-pom.xml
+
+#git
+.gitignore.swp
+
+#Idea files
+.idea
+.idea/*
+*.iml
+atlassian-ide-plugin.xml
+
+#IDEA 12.1 built files
+out
+
+
+#Mac nonsense
+.DS_Store
+
+#subversion indexes
+.svn
+
+#personal db dumps (output of dump_schema/dump_data)  not yet converted to official scripts
+*.sql.txt
+
+#grails built files
+#plugins/ # Jon Beech: removed as this was blocking the js plugins folder flexifin-web\web-app\js\shared\plugins\
+plugin.xml
+
+# folders used for deployment and server environment
+/thecore-router-2.0.0-b2
+/vmshared
+/deploy
+/pid
+database/dependency-reduced-pom.xml
+
+
+#.slcache/
+.slcache
+.slcache/*
