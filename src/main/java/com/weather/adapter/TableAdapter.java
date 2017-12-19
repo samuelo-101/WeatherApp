@@ -5,7 +5,7 @@ import com.weather.domain.LocationWeather;
 import java.util.List;
 
 /**
- * Created by samuelojo on 2017/12/17.
+ * Adapter to render single table row
  */
 public class TableAdapter {
 

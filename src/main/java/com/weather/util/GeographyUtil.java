@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
- * Created by samuelojo on 2017/12/17.
+ * Generates geographic data, including conversion of lat;lng to pixels using Mercator Projection
  */
 public class GeographyUtil {
 

@@ -4,6 +4,7 @@ import com.weather.adapter.TableAdapter;
 import com.weather.domain.LocationWeather;
 import com.weather.renderer.TableRenderer;
 import com.weather.util.GeographyUtil;
+import com.weather.util.ConditionUtil;
 import org.apache.commons.io.IOUtils;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -11,6 +12,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -18,11 +20,12 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Created by samuelojo on 2017/12/16.
+ * Main class: Will accept argument of how many records
+ * to generate or fall back to a default of 20
  */
 public class WeatherMain {
 
-    public static final String GEO_DATA_FILE_NAME = "simplemaps-worldcities-basic.csv";
+    public static final String GEO_DATA_FILE_NAME = "/simplemaps-worldcities-basic.csv";
     public static final String COLUMN_CITY = "city";
     public static final String COLUMN_CITY_ASCII = "city_ascii";
     public static final String COLUMN_LATITUDE = "lat";
@@ -69,13 +72,15 @@ public class WeatherMain {
 
     private static void buildAndRenderLocationWeather(int numberOfCities) throws IOException {
         GeographyUtil geographyUtil = new GeographyUtil();
+        ConditionUtil conditionUtil = new ConditionUtil();
 
-        URL cityDataFileURL = WeatherMain.class.getClassLoader().getResource(GEO_DATA_FILE_NAME);
-        if (cityDataFileURL != null) {
+        InputStream fileInputStream = WeatherMain.class.getResourceAsStream(GEO_DATA_FILE_NAME);
+        //URL cityDataFileURL = WeatherMain.class.getClassLoader().getResource(GEO_DATA_FILE_NAME);
+        if (fileInputStream != null) {
 
             List<LocationWeather> locationWeatherList = new ArrayList<>();
 
-            List<String> geoData = IOUtils.readLines(new FileInputStream(cityDataFileURL.getPath()), Charset.defaultCharset());
+            List<String> geoData = IOUtils.readLines(fileInputStream);
 
             for (int interationCount = 1; interationCount < numberOfCities; interationCount++) {
 
@@ -95,12 +100,14 @@ public class WeatherMain {
                 Double[][] pixelFromLatLng = geographyUtil.getPixelFromLatLng(Double.valueOf(latitude), Double.valueOf(longitude));
                 String elevation = String.valueOf(geographyUtil.getElevationAtPixel(pixelFromLatLng[0][0].intValue(), pixelFromLatLng[0][1].intValue()));
 
-                String condition = "";
-                String temperature = "";
-                String pressure = "";
-                String humidity = "";
+                double locationTemperature = conditionUtil.generateTemperatureRangesForRedChannel(Double.valueOf(elevation));
+                String temperature = String.format("%.1f", locationTemperature);
+                String condition = conditionUtil.getConditoinFromTemperature(locationTemperature);
+                int locationPressure = conditionUtil.generatePressureForRedChannel(Double.valueOf(elevation));
+                String pressure = String.valueOf(locationPressure);
+                String humidity = conditionUtil.getHumidityForTemperature(locationTemperature);
 
-                LocationWeather locationWeather = new LocationWeather(cityName, latitude, longitude, elevation, dateTimeFormatter.print(localDateTime), condition, temperature, pressure, humidity);
+                LocationWeather locationWeather = new LocationWeather(cityName, latitude, longitude, elevation, dateTimeFormatter.print(localDateTime), condition, (locationTemperature >= 0 ? "+" + temperature : temperature), pressure, humidity);
                 locationWeatherList.add(locationWeather);
             }
 

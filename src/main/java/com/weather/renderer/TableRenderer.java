@@ -3,7 +3,7 @@ package com.weather.renderer;
 import com.weather.adapter.TableAdapter;
 
 /**
- * Created by samuelojo on 2017/12/17.
+ * Renders full table based on data from adapter
  */
 public class TableRenderer {
 

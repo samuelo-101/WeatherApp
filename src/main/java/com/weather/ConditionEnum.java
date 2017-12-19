@@ -1,11 +1,10 @@
 package com.weather;
 
 /**
- * Created by samuelojo on 2017/12/17.
+ * Various possible condition types
  */
 public enum ConditionEnum {
     Rain,
     Snow,
-    Sunny,
-    PartlyCloudy
+    Sunny
 }
