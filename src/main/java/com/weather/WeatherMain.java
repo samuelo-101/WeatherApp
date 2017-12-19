@@ -18,6 +18,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.regex.Pattern;
 
 /**
  * Main class: Will accept argument of how many records
@@ -47,7 +48,7 @@ public class WeatherMain {
     public static final int COLUMN_PROVINCE_INDEX = 8;
 
 
-    public static final int TOTAL_NUMBER_OF_LOCATIONS_IN_CSV_DATA = 7322;
+    public static final int TOTAL_NUMBER_OF_LOCATIONS_IN_CSV_DATA = 7321;
     public static final int DEFAULT_NUMBER_OF_CITIES_TO_PROCESS = 20;
 
 
@@ -56,6 +57,10 @@ public class WeatherMain {
         int numberOfCities = DEFAULT_NUMBER_OF_CITIES_TO_PROCESS;
 
         if (args != null && args.length > 0) {
+            if(!Pattern.matches("[0-9]+", args[0])) {
+                System.out.println("Only integer values are allowed when specifying the number of records to generate. Please try again.");
+                System.exit(1);
+            }
             numberOfCities = Integer.valueOf(args[0]);
             if(numberOfCities > TOTAL_NUMBER_OF_LOCATIONS_IN_CSV_DATA) {
                 System.out.println("The number of desired locations cannot exceed " + TOTAL_NUMBER_OF_LOCATIONS_IN_CSV_DATA + ". PLease try again with a smaller number of desired results.");
@@ -75,14 +80,12 @@ public class WeatherMain {
         ConditionUtil conditionUtil = new ConditionUtil();
 
         InputStream fileInputStream = WeatherMain.class.getResourceAsStream(GEO_DATA_FILE_NAME);
-        //URL cityDataFileURL = WeatherMain.class.getClassLoader().getResource(GEO_DATA_FILE_NAME);
         if (fileInputStream != null) {
 
             List<LocationWeather> locationWeatherList = new ArrayList<>();
-
             List<String> geoData = IOUtils.readLines(fileInputStream);
 
-            for (int interationCount = 1; interationCount < numberOfCities; interationCount++) {
+            for (int interationCount = 1; interationCount < numberOfCities + 1; interationCount++) {
 
                 int randomCSVDataIndex = ThreadLocalRandom.current().nextInt(1, geoData.size());
 
