@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -65,7 +66,11 @@ public class GeographyUtil {
                     String longitude = cityGeoData[COLUMN_LONGITUDE_INDEX];
 
                     DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-                    LocalDateTime localDateTime = LocalDateTime.now();
+                    Calendar startDate = Calendar.getInstance();
+                    startDate.set(2015, 1, 1);
+                    Calendar endDate = Calendar.getInstance();
+                    long dateForLocation = ThreadLocalRandom.current().nextLong(startDate.getTimeInMillis(), endDate.getTimeInMillis());
+                    LocalDateTime localDateTime = new LocalDateTime(dateForLocation);
 
                     Double[][] pixelFromLatLng = getPixelFromLatLng(Double.valueOf(latitude), Double.valueOf(longitude));
                     String elevation = String.valueOf(getElevationAtPixel(pixelFromLatLng[0][0].intValue(), pixelFromLatLng[0][1].intValue()));
