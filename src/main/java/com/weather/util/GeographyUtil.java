@@ -4,8 +4,6 @@ import com.weather.WeatherMain;
 import com.weather.domain.LocationWeather;
 import org.apache.commons.io.IOUtils;
 import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -65,7 +63,6 @@ public class GeographyUtil {
                     String latitude = cityGeoData[COLUMN_LATITUDE_INDEX];
                     String longitude = cityGeoData[COLUMN_LONGITUDE_INDEX];
 
-                    DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
                     Calendar startDate = Calendar.getInstance();
                     startDate.set(2015, 1, 1);
                     Calendar endDate = Calendar.getInstance();
@@ -82,7 +79,7 @@ public class GeographyUtil {
                     String pressure = String.valueOf(locationPressure);
                     String humidity = conditionUtil.getHumidityForTemperature(locationTemperature);
 
-                    LocationWeather locationWeather = new LocationWeather(cityName, latitude, longitude, elevation, dateTimeFormatter.print(localDateTime), condition, (locationTemperature >= 0 ? "+" + temperature : temperature), pressure, humidity);
+                    LocationWeather locationWeather = new LocationWeather(cityName, latitude, longitude, elevation, localDateTime.toString(), condition, (locationTemperature >= 0 ? "+" + temperature : temperature), pressure, humidity);
                     locationWeatherList.add(locationWeather);
                 }
             }
