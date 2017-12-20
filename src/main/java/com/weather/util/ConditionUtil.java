@@ -91,7 +91,7 @@ public class ConditionUtil {
     }
 
     public String getHumidityForTemperature(Double temperature) {
-        ConditionEnum condition = ConditionEnum.valueOf(getConditoinFromTemperature(temperature));
+        ConditionEnum condition = ConditionEnum.valueOf(getConditionFromTemperature(temperature));
         switch (condition) {
             case Sunny:
                 return String.valueOf(getRandomNumber(0.0, 33.33));
@@ -104,7 +104,7 @@ public class ConditionUtil {
         }
     }
 
-    public String getConditoinFromTemperature(Double temperature) {
+    public String getConditionFromTemperature(Double temperature) {
         if(temperature < 0)
             return ConditionEnum.Snow.name();
         else if(temperature >= 0 && temperature < 20)
