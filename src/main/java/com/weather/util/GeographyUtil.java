@@ -64,7 +64,7 @@ public class GeographyUtil {
                     String longitude = cityGeoData[COLUMN_LONGITUDE_INDEX];
 
                     Calendar startDate = Calendar.getInstance();
-                    startDate.set(2015, 1, 1);
+                    startDate.set(2015, Calendar.JANUARY, 1);
                     Calendar endDate = Calendar.getInstance();
                     long dateForLocation = ThreadLocalRandom.current().nextLong(startDate.getTimeInMillis(), endDate.getTimeInMillis());
                     LocalDateTime localDateTime = new LocalDateTime(dateForLocation);
@@ -82,6 +82,7 @@ public class GeographyUtil {
                     LocationWeather locationWeather = new LocationWeather(cityName, latitude, longitude, elevation, localDateTime.toString(), condition, (locationTemperature >= 0 ? "+" + temperature : temperature), pressure, humidity);
                     locationWeatherList.add(locationWeather);
                 }
+                fileInputStream.close();
             }
             return locationWeatherList;
         } catch (IOException e) {
