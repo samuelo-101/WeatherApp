@@ -19,3 +19,10 @@ USAGE INFORMATION
 - In the 'scripts' folder there is a file called 'run.sh' and also a jar file 'weatherapp.jar'
 - To run, navigate into the scripts folder using your terminal, and type './run.sh' (without the single quotes)
 - The program will, by default, generate 20 rows of data. To specify the number of records to be generated, provide an integer value after the file name. Eg: './run.sh 45' will generate 45 records
+
+DATA SOURCES
+------------------------------------------------------------
+The following data sources were used for this project:
+
+- https://visibleearth.nasa.gov/view.php?id=73934
+- https://simplemaps.com/data/world-cities
